@@ -24,20 +24,30 @@ window.__ModuleLoader__.load({
     function css() {
       return `
 ${FOOTER_ACTIONS_TWO_COL ? `
-/* Sidebar footer action rows: two entries share one line in wide mode. */
-.${SIDEBAR_PREFIX}footerActions > div {
+/* Sidebar footer action rows: two entries share one line in wide mode.
+   Two DOM shapes must both work: on a cold boot the slot renders entries as
+   direct children of footerActions; under HMR/hot-reload sessions an
+   anonymous wrapper div sits between them (display:contents makes that
+   wrapper transparent so its children become the flex items either way). */
+.${SIDEBAR_PREFIX}footerActions {
   display: flex !important;
   flex-direction: row !important;
   align-items: stretch !important;
   gap: 4px !important;
-  width: 100% !important;
 }
+.${SIDEBAR_PREFIX}footerActions > div { display: contents !important; }
+.${SIDEBAR_PREFIX}footerActions > *,
 .${SIDEBAR_PREFIX}footerActions > div > * {
   flex: 1 1 0 !important;
   width: auto !important;
   min-width: 0 !important;
 }
+.${SIDEBAR_PREFIX}collapsed .${SIDEBAR_PREFIX}footerActions {
+  flex-direction: column !important;
+  align-items: center !important;
+}
 .${SIDEBAR_PREFIX}collapsed .${SIDEBAR_PREFIX}footerActions > div {
+  display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
 }
