@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Compact sidebar",
+    "description": "Packs sidebar footer actions and global panel rows two per line, freeing vertical space for the workspace session list."
+  }
+}
