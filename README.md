@@ -50,10 +50,22 @@ already loaded plugin only need a page refresh).
 
 ## Maintenance note
 
-The rules target the shipped sidebar's CSS-module prefix `csseja_`
-(`SidebarRoot.module.css`: `panelList`, `panelRow`, `panelTitle`,
-`footerActions`). A DSH upgrade may rename it — search the packaged client
-bundle for `SidebarRoot.module.css` and update `SIDEBAR_PREFIX` in `client.js`.
+The rules target the shipped sidebar's CSS-module prefix `wtg9ga_` (verified on
+DSH 0.2.2-rc.2; older releases used `csseja_`). Search the packaged client
+bundle (`@deepseek-ai/dsh-client-ui-sidebar/lib/client.js`) and update
+`SIDEBAR_PREFIX` in `client.js` after a DSH upgrade.
+
+Two 0.2.2 changes the rules account for:
+
+- The panel row DOM deepened to
+  `nav.panelList > div.panelEntryWide > button.panelRow > span.panelTitle`, so
+  the wide-mode test uses a descendant `:has(.panelTitle)` instead of a fixed
+  child depth.
+- `flex-direction` on `panelList` is overridden by shipped layout rules, so the
+  two-column layout is forced with `display: grid` instead of flex.
+
+`dsh.client.inject` points at `@deepseek-ai/dsh-client-ui-conversation` (the
+first-loaded client surface) so the stylesheet mounts early and reliably.
 
 ## License
 

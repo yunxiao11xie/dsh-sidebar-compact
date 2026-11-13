@@ -46,11 +46,22 @@ dsh plugin --profile desktop add dsh-sidebar-compact
 
 ## 维护提示
 
-规则依赖官方侧栏的 CSS module 前缀 `csseja_`（`SidebarRoot.module.css` 里的
-`panelList` / `panelRow` / `panelTitle` / `footerActions`）。DSH 升级可能改前缀
-——在打包后的 client bundle 里搜 `SidebarRoot.module.css`，改 `client.js` 里的
-`SIDEBAR_PREFIX` 即可。
+规则依赖官方侧栏的 CSS module 前缀 `wtg9ga_`（DSH 0.2.2-rc.2 实测；旧版是
+`csseja_`）。DSH 升级可能改前缀——在打包后的 client bundle
+（`@deepseek-ai/dsh-client-ui-sidebar/lib/client.js`）里搜 `SidebarRoot.module.css`，
+改 `client.js` 里的 `SIDEBAR_PREFIX` 即可。
+
+0.2.2 有两处结构变化已在规则里兼容：
+
+- 面板行 DOM 变深为 `nav.panelList > div.panelEntryWide > button.panelRow > span.panelTitle`，
+  宽栏判定改用后代 `:has(.panelTitle)`，不再绑定固定层级；
+- `panelList` 的 `flex-direction` 会被官方布局规则覆盖，两列改用
+  `display: grid; grid-template-columns: 1fr 1fr` 强制实现。
+
+`dsh.client.inject` 指向 `@deepseek-ai/dsh-client-ui-conversation`（最早加载的客户端面），
+保证样式表提前挂载、稳定生效。
 
 ## 许可证
 
 MIT
+

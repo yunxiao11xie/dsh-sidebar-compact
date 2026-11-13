@@ -9,7 +9,7 @@ window.__ModuleLoader__.load({
     // SidebarRoot.module.css). It changes between DSH builds: re-read it from the
     // packaged client bundle after an upgrade (search the asar for
     // "SidebarRoot.module.css" and take the class before the first underscore).
-    const SIDEBAR_PREFIX = 'csseja_';
+    const SIDEBAR_PREFIX = 'wtg9ga_';
 
     // Two footer action entries share one line in wide mode. Their rows wrap an
     // anonymous container div and carry width:100%, so the wrapper becomes a
@@ -53,18 +53,21 @@ ${FOOTER_ACTIONS_TWO_COL ? `
 }
 ` : ''}
 ${PANEL_LIST_TWO_COL ? `
-/* Sidebar global panel rows: two entries per line in wide mode. */
-.${SIDEBAR_PREFIX}panelList:has(> * > .${SIDEBAR_PREFIX}panelTitle) {
-  flex-direction: row !important;
-  flex-wrap: wrap !important;
+/* Sidebar global panel rows: two entries per line in wide mode.
+   :has() on the descendant title span, not a fixed child depth — the shipped
+   DOM nesting differs between releases (0.2.1: list > row > title;
+   0.2.2: list > entry > button > title). */
+.${SIDEBAR_PREFIX}panelList:has(.${SIDEBAR_PREFIX}panelTitle) {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  flex-direction: initial !important;
+  flex-wrap: initial !important;
   column-gap: 4px !important;
   row-gap: 2px !important;
 }
-.${SIDEBAR_PREFIX}panelList:has(> * > .${SIDEBAR_PREFIX}panelTitle) > * {
-  /* fixed half width: flex-basis 0 would keep all rows on one line and
-     squeeze the label span to zero width */
-  flex: 0 0 calc(50% - 2px) !important;
-  width: auto !important;
+.${SIDEBAR_PREFIX}panelList:has(.${SIDEBAR_PREFIX}panelTitle) > * {
+  width: 100% !important;
+  max-width: 100% !important;
   min-width: 0 !important;
 }
 ` : ''}

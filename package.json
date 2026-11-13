@@ -1,9 +1,16 @@
 {
   "name": "dsh-sidebar-compact",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "description": "Sidebar compaction for the DeepSeek Harness Web UI: two footer actions and two global panel rows per line, freeing vertical space for the workspace list.",
-  "keywords": ["dsh-plugin", "deepseek-harness", "dsh", "ui", "sidebar", "compact"],
+  "keywords": [
+    "dsh-plugin",
+    "deepseek-harness",
+    "dsh",
+    "ui",
+    "sidebar",
+    "compact"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -30,11 +37,15 @@
     "LICENSE"
   ],
   "dsh": {
-    "bundle": { "patch": "./cordis.patch.yml" },
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
     "client": {
       "platform": "web",
       "immediately": true,
-      "inject": ["@deepseek-ai/dsh-client-ui-sidebar"]
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-conversation"
+      ]
     }
   }
 }
